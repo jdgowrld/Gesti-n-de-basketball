@@ -9,10 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+   public function up(): void
     {
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('ciudad');
+            $table->string('logo')->nullable(); // nullable permite que se quede en blanco
             $table->timestamps();
         });
     }
