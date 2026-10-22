@@ -7,9 +7,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('equipos.index') }}">Equipos</a>
+                    <a class="nav-link" href="{{ route('equipos.index') }}">Equipos</a>
                 </li>
-                <!-- Aquí Emiliano irá agregando Jugadores, Canchas, etc. -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('temporadas.index') }}">Temporadas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('torneos.index') }}">Torneos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('partidos.index') }}">Partidos</a>
+                </li>
+                <!-- Aquí Emi agregará Jugadores, Canchas, etc. -->
             </ul>
         </div>
     </div>

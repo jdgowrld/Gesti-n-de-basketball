@@ -9,10 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+   public function up(): void
     {
         Schema::create('partidos', function (Blueprint $table) {
             $table->id();
+            
+            // Llave foránea normal hacia torneos
+            $table->foreignId('torneo_id')->constrained()->cascadeOnDelete();
+            
+            // Llaves foráneas gemelas hacia la tabla equipos
+            $table->foreignId('equipo_local_id')->constrained('equipos')->cascadeOnDelete();
+            $table->foreignId('equipo_visitante_id')->constrained('equipos')->cascadeOnDelete();
+            
+            $table->date('fecha');
+            $table->time('hora');
+            $table->string('estado')->default('Programado'); // Programado, En Juego, Finalizado
+            
             $table->timestamps();
         });
     }
