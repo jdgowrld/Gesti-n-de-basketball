@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('temporadas', function (Blueprint $table) {
             $table->id();
+            $table->integer('año_inicio');
+            $table->integer('año_fin');
+            // Usamos boolean para un switch rápido: 1 = Activa, 0 = Terminada
+            $table->boolean('estado')->default(true); 
             $table->timestamps();
         });
     }
