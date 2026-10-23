@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="#"> Liga Básquetbol</a>
+        <a class="navbar-brand" href=""> Liga Básquetbol</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,7 +18,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('partidos.index') }}">Partidos</a>
                 </li>
-                <!-- Aquí Emi agregará Jugadores, Canchas, etc. -->
+                <li class="nav-item"><a class="nav-link" href="{{ route('jugadores.index') }}">Jugadores</a></li>
             </ul>
         </div>
     </div>

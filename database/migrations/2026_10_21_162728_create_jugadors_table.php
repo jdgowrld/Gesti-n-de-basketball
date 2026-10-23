@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jugadors', function (Blueprint $table) {
+        Schema::create('jugadores', function (Blueprint $table) {
             $table->id();
+            // Llave foránea hacia la tabla equipos
+            $table->foreignId('equipo_id')->constrained('equipos')->cascadeOnDelete();
+            
+            $table->string('nombre');
+            $table->string('posicion'); // Base, Escolta, Alero, Ala-Pívot, Pívot
+            $table->integer('numero');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
