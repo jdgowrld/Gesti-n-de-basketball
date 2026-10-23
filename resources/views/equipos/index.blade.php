@@ -9,13 +9,11 @@
 </head>
 <body class="bg-light">
     
-    <!-- Componente reutilizable -->
     <x-navbar />
 
     <div class="container mt-4">
         <h1 class="text-center mb-4">Franquicias de la Liga</h1>
 
-        <!-- Alertas de UX (Éxito o Error) -->
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -65,35 +63,29 @@
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que quieres dar de baja este equipo?')">Eliminar</button>
                                 </form>
 
-                                <!-- MODAL DE EDICIÓN -->
-                                <div class="modal fade" id="editModal{{$equipo->id}}" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Actualizar Equipo</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                      </div>
-                                      <div class="modal-body text-start">
-                                        <form action="{{ route('equipos.update', $equipo->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="mb-3">
-                                                <label>Nombre del Equipo</label>
-                                                <input type="text" name="nombre" class="form-control" value="{{ $equipo->nombre }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label>Ciudad</label>
-                                                <input type="text" name="ciudad" class="form-control" value="{{ $equipo->ciudad }}" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-warning">Actualizar</button>
-                                            </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                <!-- MODAL DE EDICIÓN REFATORIZADO CON EL COMPONENTE -->
+                                <x-modal id="editModal{{$equipo->id}}" title="Actualizar Equipo">
+                                    <form action="{{ route('equipos.update', $equipo->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label>Nombre del Equipo</label>
+                                            <input type="text" name="nombre" class="form-control" value="{{ $equipo->nombre }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Ciudad</label>
+                                            <input type="text" name="ciudad" class="form-control" value="{{ $equipo->ciudad }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Logo (URL)</label>
+                                            <input type="text" name="logo" class="form-control" value="{{ $equipo->logo }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </x-modal>
                                 <!-- FIN MODAL DE EDICIÓN -->
                             </td>
                         </tr>
@@ -104,38 +96,29 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Registrar Equipo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body text-start">
-            <form action="{{ route('equipos.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label>Nombre del Equipo</label>
-                    <input type="text" name="nombre" class="form-control" placeholder="Ej. Toros de Torreón" required>
-                </div>
-                <div class="mb-3">
-                    <label>Ciudad</label>
-                    <input type="text" name="ciudad" class="form-control" placeholder="Ej. Torreón" required>
-                </div>
-                <div class="mb-3">
-                    <label>Logo (Opcional - URL)</label>
-                    <input type="text" name="logo" class="form-control">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MODAL DE CREACIÓN REFACTORIZADO CON EL COMPONENTE -->
+    <x-modal id="createModal" title="Registrar Equipo">
+        <form action="{{ route('equipos.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Nombre del Equipo</label>
+                <input type="text" name="nombre" class="form-control" placeholder="Ej. Toros de Torreón" required>
+            </div>
+            <div class="mb-3">
+                <label>Ciudad</label>
+                <input type="text" name="ciudad" class="form-control" placeholder="Ej. Torreón" required>
+            </div>
+            <div class="mb-3">
+                <label>Logo (Opcional - URL)</label>
+                <input type="text" name="logo" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+        </form>
+    </x-modal>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

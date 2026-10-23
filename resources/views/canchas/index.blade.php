@@ -59,39 +59,29 @@
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar esta sede?')">Borrar</button>
                                 </form>
 
-                                <!-- MODAL DE EDICIÓN -->
-                                <div class="modal fade" id="editModal{{$cancha->id}}" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Actualizar Sede</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                      </div>
-                                      <div class="modal-body text-start">
-                                        <form action="{{ route('canchas.update', $cancha->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="mb-3">
-                                                <label>Nombre</label>
-                                                <input type="text" name="nombre" class="form-control" value="{{ $cancha->nombre }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label>Dirección</label>
-                                                <input type="text" name="direccion" class="form-control" value="{{ $cancha->direccion }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label>Capacidad (Opcional)</label>
-                                                <input type="number" name="capacidad" class="form-control" value="{{ $cancha->capacidad }}">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-warning">Actualizar</button>
-                                            </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                <!-- MODAL DE EDICIÓN REFACTORIZADO -->
+                                <x-modal id="editModal{{$cancha->id}}" title="Actualizar Sede">
+                                    <form action="{{ route('canchas.update', $cancha->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label>Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" value="{{ $cancha->nombre }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Dirección</label>
+                                            <input type="text" name="direccion" class="form-control" value="{{ $cancha->direccion }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Capacidad (Opcional)</label>
+                                            <input type="number" name="capacidad" class="form-control" value="{{ $cancha->capacidad }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </x-modal>
                             </td>
                         </tr>
                         @endforeach
@@ -101,38 +91,28 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Registrar Nueva Sede</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body text-start">
-            <form action="{{ route('canchas.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label>Nombre</label>
-                    <input type="text" name="nombre" class="form-control" placeholder="Ej. Auditorio Municipal" required>
-                </div>
-                <div class="mb-3">
-                    <label>Dirección</label>
-                    <input type="text" name="direccion" class="form-control" placeholder="Ej. Centro Histórico" required>
-                </div>
-                <div class="mb-3">
-                    <label>Capacidad (Opcional)</label>
-                    <input type="number" name="capacidad" class="form-control" placeholder="Ej. 1500">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- MODAL DE CREACIÓN REFACTORIZADO -->
+    <x-modal id="createModal" title="Registrar Nueva Sede">
+        <form action="{{ route('canchas.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" name="nombre" class="form-control" placeholder="Ej. Auditorio Municipal" required>
+            </div>
+            <div class="mb-3">
+                <label>Dirección</label>
+                <input type="text" name="direccion" class="form-control" placeholder="Ej. Centro Histórico" required>
+            </div>
+            <div class="mb-3">
+                <label>Capacidad (Opcional)</label>
+                <input type="number" name="capacidad" class="form-control" placeholder="Ej. 1500">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+        </form>
+    </x-modal>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

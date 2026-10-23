@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipo;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreEquipoRequest;
 
 class EquipoController extends Controller
 {
@@ -14,23 +15,15 @@ class EquipoController extends Controller
         return view('equipos.index', compact('equipos'));
     }
 
-    // Procesa el formulario de registro (Modal Crear)
-    public function store(Request $request)
+    // Inyectamos el componente aquí en los paréntesis
+    public function store(StoreEquipoRequest $request)
     {
-        // 1. Validación estricta antes de tocar la base de datos
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'ciudad' => 'required|string|max:255',
-            'logo'   => 'nullable|string' // Puede ir vacío si aún no tienen logo
-        ]);
-
+        // Ya no hay $request->validate() aquí. ¡Código limpio!
         try {
-            // 2. Inserción limpia usando el $fillable del modelo
             Equipo::create($request->all());
-            return redirect()->route('equipos.index')->with('success', 'Equipo registrado a la perfección.');
+            return back()->with('success', 'Equipo registrado con éxito.');
         } catch (\Exception $e) {
-            // 3. Manejo de errores amigable para la UX
-            return back()->withErrors(['error' => 'Hubo un fallo al registrar el equipo: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'Fallo al registrar: ' . $e->getMessage()]);
         }
     }
 

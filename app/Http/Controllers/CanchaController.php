@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cancha;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCanchaRequest;
 
 class CanchaController extends Controller
 {
@@ -13,14 +14,8 @@ class CanchaController extends Controller
         return view('canchas.index', compact('canchas'));
     }
 
-    public function store(Request $request)
+    public function store(StoreCanchaRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
-            'capacidad' => 'nullable|integer|min:0'
-        ]);
-
         try {
             Cancha::create($request->all());
             return back()->with('success', 'Sede registrada correctamente.');
@@ -29,14 +24,8 @@ class CanchaController extends Controller
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(StoreCanchaRequest $request, string $id)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
-            'capacidad' => 'nullable|integer|min:0'
-        ]);
-
         try {
             Cancha::findOrFail($id)->update($request->all());
             return back()->with('success', 'Sede actualizada.');

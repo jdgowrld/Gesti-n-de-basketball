@@ -73,72 +73,62 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Añadir Estadísticas al Box Score</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body text-start">
-            <form action="{{ route('estadisticas.store') }}" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label>Partido (En Juego / Finalizado)</label>
-                        <select name="partido_id" class="form-control" required>
-                            <option value="">Selecciona el partido...</option>
-                            @foreach($partidos as $partido)
-                                <option value="{{ $partido->id }}">
-                                    {{ $partido->equipoLocal->nombre ?? 'Local' }} vs {{ $partido->equipoVisitante->nombre ?? 'Visitante' }} ({{ \Carbon\Carbon::parse($partido->fecha)->format('d/m') }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Jugador</label>
-                        <select name="jugador_id" class="form-control" required>
-                            <option value="">Selecciona al jugador...</option>
-                            @foreach($jugadores as $jugador)
-                                <option value="{{ $jugador->id }}">{{ $jugador->nombre }} ({{ $jugador->equipo->nombre ?? 'Sin Equipo' }})</option>
-                            @endforeach
-                        </select>
-                    </div>
+    <!-- MODAL DE CREACIÓN REFACTORIZADO -->
+    <x-modal id="createModal" title="Añadir Estadísticas al Box Score">
+        <form action="{{ route('estadisticas.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Partido (En Juego / Finalizado)</label>
+                    <select name="partido_id" class="form-control" required>
+                        <option value="">Selecciona el partido...</option>
+                        @foreach($partidos as $partido)
+                            <option value="{{ $partido->id }}">
+                                {{ $partido->equipoLocal->nombre ?? 'Local' }} vs {{ $partido->equipoVisitante->nombre ?? 'Visitante' }} ({{ \Carbon\Carbon::parse($partido->fecha)->format('d/m') }})
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label>Jugador</label>
+                    <select name="jugador_id" class="form-control" required>
+                        <option value="">Selecciona al jugador...</option>
+                        @foreach($jugadores as $jugador)
+                            <option value="{{ $jugador->id }}">{{ $jugador->nombre }} ({{ $jugador->equipo->nombre ?? 'Sin Equipo' }})</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-2 mb-3">
-                        <label>Puntos</label>
-                        <input type="number" name="puntos" class="form-control" value="0" min="0" required>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <label>Triples</label>
-                        <input type="number" name="triples" class="form-control" value="0" min="0" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>Rebotes</label>
-                        <input type="number" name="rebotes" class="form-control" value="0" min="0" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>Asistencias</label>
-                        <input type="number" name="asistencias" class="form-control" value="0" min="0" required>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <label>Faltas</label>
-                        <input type="number" name="faltas" class="form-control" value="0" min="0" max="5" required>
-                    </div>
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <label>Puntos</label>
+                    <input type="number" name="puntos" class="form-control" value="0" min="0" required>
                 </div>
+                <div class="col-md-2 mb-3">
+                    <label>Triples</label>
+                    <input type="number" name="triples" class="form-control" value="0" min="0" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Rebotes</label>
+                    <input type="number" name="rebotes" class="form-control" value="0" min="0" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Asistencias</label>
+                    <input type="number" name="asistencias" class="form-control" value="0" min="0" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>Faltas</label>
+                    <input type="number" name="faltas" class="form-control" value="0" min="0" max="5" required>
+                </div>
+            </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Stats</button>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar Stats</button>
+            </div>
+        </form>
+    </x-modal>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Temporada;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTemporadaRequest;
 
 class TemporadaController extends Controller
 {
@@ -13,19 +14,13 @@ class TemporadaController extends Controller
         return view('temporadas.index', compact('temporadas'));
     }
 
-    public function store(Request $request)
+    public function store(StoreTemporadaRequest $request)
     {
-        $request->validate([
-            'año_inicio' => 'required|integer',
-            'año_fin' => 'required|integer',
-            'estado' => 'nullable' // El checkbox manda 'on' si está marcado, nulo si no
-        ]);
-
+        // El $request->validate() ya no está aquí, Laravel lo hace en automático antes
         try {
             Temporada::create([
                 'año_inicio' => $request->año_inicio,
                 'año_fin' => $request->año_fin,
-                // Si el checkbox se manda, guardamos 1 (Activo), si no 0 (Inactivo)
                 'estado' => $request->has('estado') ? 1 : 0
             ]);
             return back()->with('success', 'Temporada registrada.');

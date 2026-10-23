@@ -6,6 +6,7 @@ use App\Models\Estadistica;
 use App\Models\Partido;
 use App\Models\Jugador;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreEstadisticaRequest;
 
 class EstadisticaController extends Controller
 {
@@ -19,18 +20,8 @@ class EstadisticaController extends Controller
         return view('estadisticas.index', compact('estadisticas', 'partidos', 'jugadores'));
     }
 
-    public function store(Request $request)
+    public function store(StoreEstadisticaRequest $request)
     {
-        $request->validate([
-            'partido_id' => 'required|exists:partidos,id',
-            'jugador_id' => 'required|exists:jugadores,id',
-            'puntos' => 'required|integer|min:0',
-            'triples' => 'required|integer|min:0',
-            'rebotes' => 'required|integer|min:0',
-            'asistencias' => 'required|integer|min:0',
-            'faltas' => 'required|integer|min:0|max:5'
-        ]);
-
         try {
             Estadistica::create($request->all());
             return back()->with('success', 'Rendimiento del jugador registrado.');

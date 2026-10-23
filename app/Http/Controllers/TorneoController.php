@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Torneo;
 use App\Models\Temporada;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTorneoRequest;
 
 class TorneoController extends Controller
 {
@@ -20,18 +21,13 @@ class TorneoController extends Controller
         return view('torneos.index', compact('torneos', 'temporadas'));
     }
 
-    public function store(Request $request)
+    public function store(StoreTorneoRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'temporada_id' => 'required|exists:temporadas,id' // Valida que el ID realmente exista en MariaDB
-        ]);
-
         try {
             Torneo::create($request->all());
-            return back()->with('success', 'Torneo registrado chingón.');
+            return back()->with('success', 'Torneo registrado.');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Fallo al registrar: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'Fallo al guardar: ' . $e->getMessage()]);
         }
     }
     

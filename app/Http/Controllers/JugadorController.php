@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jugador;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreJugadorRequest;
 
 class JugadorController extends Controller
 {
@@ -15,15 +16,8 @@ class JugadorController extends Controller
         return view('jugadores.index', compact('jugadores', 'equipos'));
     }
 
-    public function store(Request $request)
+    public function store(StoreJugadorRequest $request)
     {
-        $request->validate([
-            'equipo_id' => 'required|exists:equipos,id',
-            'nombre' => 'required|string|max:255',
-            'posicion' => 'required|string',
-            'numero' => 'required|integer'
-        ]);
-
         try {
             Jugador::create($request->all());
             return back()->with('success', 'Jugador registrado en el roster.');
@@ -32,15 +26,8 @@ class JugadorController extends Controller
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(StoreJugadorRequest $request, string $id)
     {
-        $request->validate([
-            'equipo_id' => 'required|exists:equipos,id',
-            'nombre' => 'required|string|max:255',
-            'posicion' => 'required|string',
-            'numero' => 'required|integer'
-        ]);
-
         try {
             Jugador::findOrFail($id)->update($request->all());
             return back()->with('success', 'Roster actualizado.');

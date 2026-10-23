@@ -6,6 +6,7 @@ use App\Models\Partido;
 use App\Models\Torneo;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePartidoRequest;
 
 class PartidoController extends Controller
 {
@@ -19,17 +20,8 @@ class PartidoController extends Controller
         return view('partidos.index', compact('partidos', 'torneos', 'equipos'));
     }
 
-    public function store(Request $request)
+    public function store(StorePartidoRequest $request)
     {
-        $request->validate([
-            'torneo_id' => 'required|exists:torneos,id',
-            'equipo_local_id' => 'required|exists:equipos,id|different:equipo_visitante_id',
-            'equipo_visitante_id' => 'required|exists:equipos,id',
-            'fecha' => 'required|date',
-            'hora' => 'required',
-            'estado' => 'required|string'
-        ]);
-
         try {
             Partido::create($request->all());
             return back()->with('success', 'Partido agendado correctamente.');
@@ -37,7 +29,6 @@ class PartidoController extends Controller
             return back()->withErrors(['error' => 'Error al guardar: ' . $e->getMessage()]);
         }
     }
-
     public function destroy(string $id)
     {
         try {

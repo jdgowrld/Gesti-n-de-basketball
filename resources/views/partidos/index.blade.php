@@ -77,77 +77,67 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Agendar Nuevo Partido</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body text-start">
-            <form action="{{ route('partidos.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label>Torneo</label>
-                    <select name="torneo_id" class="form-control" required>
-                        <option value="">Selecciona un torneo...</option>
-                        @foreach($torneos as $torneo)
-                            <option value="{{ $torneo->id }}">{{ $torneo->nombre }}</option>
+    <!-- MODAL DE CREACIÓN REFACTORIZADO -->
+    <x-modal id="createModal" title="Agendar Nuevo Partido">
+        <form action="{{ route('partidos.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Torneo</label>
+                <select name="torneo_id" class="form-control" required>
+                    <option value="">Selecciona un torneo...</option>
+                    @foreach($torneos as $torneo)
+                        <option value="{{ $torneo->id }}">{{ $torneo->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Equipo Local</label>
+                    <select name="equipo_local_id" class="form-control" required>
+                        <option value="">Local...</option>
+                        @foreach($equipos as $equipo)
+                            <option value="{{ $equipo->id }}">{{ $equipo->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label>Equipo Local</label>
-                        <select name="equipo_local_id" class="form-control" required>
-                            <option value="">Local...</option>
-                            @foreach($equipos as $equipo)
-                                <option value="{{ $equipo->id }}">{{ $equipo->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Equipo Visitante</label>
-                        <select name="equipo_visitante_id" class="form-control" required>
-                            <option value="">Visitante...</option>
-                            @foreach($equipos as $equipo)
-                                <option value="{{ $equipo->id }}">{{ $equipo->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label>Fecha</label>
-                        <input type="date" name="fecha" class="form-control" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Hora</label>
-                        <input type="time" name="hora" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label>Estado</label>
-                    <select name="estado" class="form-control" required>
-                        <option value="Programado">Programado</option>
-                        <option value="En Juego">En Juego</option>
-                        <option value="Finalizado">Finalizado</option>
+                <div class="col-md-6 mb-3">
+                    <label>Equipo Visitante</label>
+                    <select name="equipo_visitante_id" class="form-control" required>
+                        <option value="">Visitante...</option>
+                        @foreach($equipos as $equipo)
+                            <option value="{{ $equipo->id }}">{{ $equipo->nombre }}</option>
+                        @endforeach
                     </select>
                 </div>
+            </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Agendar</button>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Fecha</label>
+                    <input type="date" name="fecha" class="form-control" required>
                 </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+                <div class="col-md-6 mb-3">
+                    <label>Hora</label>
+                    <input type="time" name="hora" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Estado</label>
+                <select name="estado" class="form-control" required>
+                    <option value="Programado">Programado</option>
+                    <option value="En Juego">En Juego</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Agendar</button>
+            </div>
+        </form>
+    </x-modal>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

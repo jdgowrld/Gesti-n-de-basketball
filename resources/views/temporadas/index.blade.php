@@ -67,40 +67,29 @@
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que quieres eliminarla?')">Eliminar</button>
                                 </form>
 
-                                <!-- MODAL DE EDICIÓN -->
-                                <div class="modal fade" id="editModal{{$temporada->id}}" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Actualizar Temporada</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                      </div>
-                                      <div class="modal-body text-start">
-                                        <form action="{{ route('temporadas.update', $temporada->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="mb-3">
-                                                <label>Año de Inicio</label>
-                                                <input type="number" name="año_inicio" class="form-control" value="{{ $temporada->año_inicio }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label>Año de Fin</label>
-                                                <input type="number" name="año_fin" class="form-control" value="{{ $temporada->año_fin }}" required>
-                                            </div>
-                                            <div class="mb-3 form-check">
-                                                <!-- Mantiene el check si estaba activa -->
-                                                <input type="checkbox" name="estado" class="form-check-input" {{ $temporada->estado ? 'checked' : '' }}>
-                                                <label class="form-check-label">Temporada Activa</label>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-warning">Actualizar</button>
-                                            </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                <!-- MODAL DE EDICIÓN REFACTORIZADO -->
+                                <x-modal id="editModal{{$temporada->id}}" title="Actualizar Temporada">
+                                    <form action="{{ route('temporadas.update', $temporada->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label>Año de Inicio</label>
+                                            <input type="number" name="año_inicio" class="form-control" value="{{ $temporada->año_inicio }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Año de Fin</label>
+                                            <input type="number" name="año_fin" class="form-control" value="{{ $temporada->año_fin }}" required>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" name="estado" class="form-check-input" {{ $temporada->estado ? 'checked' : '' }}>
+                                            <label class="form-check-label">Temporada Activa</label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </x-modal>
                             </td>
                         </tr>
                         @endforeach
@@ -110,38 +99,28 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Registrar Temporada</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body text-start">
-            <form action="{{ route('temporadas.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label>Año de Inicio</label>
-                    <input type="number" name="año_inicio" class="form-control" placeholder="Ej. 2026" required>
-                </div>
-                <div class="mb-3">
-                    <label>Año de Fin</label>
-                    <input type="number" name="año_fin" class="form-control" placeholder="Ej. 2027" required>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" name="estado" class="form-check-input" checked>
-                    <label class="form-check-label">Temporada Activa</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- MODAL DE CREACIÓN REFACTORIZADO -->
+    <x-modal id="createModal" title="Registrar Temporada">
+        <form action="{{ route('temporadas.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Año de Inicio</label>
+                <input type="number" name="año_inicio" class="form-control" placeholder="Ej. 2026" required>
+            </div>
+            <div class="mb-3">
+                <label>Año de Fin</label>
+                <input type="number" name="año_fin" class="form-control" placeholder="Ej. 2027" required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="estado" class="form-check-input" checked>
+                <label class="form-check-label">Temporada Activa</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+        </form>
+    </x-modal>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
