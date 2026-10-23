@@ -6,6 +6,9 @@ use App\Http\Controllers\TemporadaController;
 use App\Http\Controllers\TorneoController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\JugadorController;
+use App\Http\Controllers\EstadisticaController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,3 +19,4 @@ Route::resource('temporadas', TemporadaController::class);
 Route::resource('torneos', TorneoController::class);
 Route::resource('partidos', PartidoController::class);
 Route::resource('jugadores', JugadorController::class);
+Route::resource('estadisticas', EstadisticaController::class);
