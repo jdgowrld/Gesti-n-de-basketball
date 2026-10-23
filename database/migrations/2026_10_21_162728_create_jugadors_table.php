@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('equipo_id')->constrained('equipos')->cascadeOnDelete();
             
             $table->string('nombre');
-            $table->string('posicion'); // Base, Escolta, Alero, Ala-Pívot, Pívot
+            $table->string('posicion');
             $table->integer('numero');
             $table->timestamps();
         });

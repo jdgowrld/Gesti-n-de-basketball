@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('arbitros', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->integer('experiencia_anios')->default(0);
+            $table->string('certificacion')->nullable(); // Ej. FIBA, Nacional, Amateur
             $table->timestamps();
         });
     }

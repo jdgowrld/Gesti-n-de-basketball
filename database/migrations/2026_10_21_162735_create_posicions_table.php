@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('posicions', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre'); // Ej. Base, Alero
+            $table->string('abreviatura')->nullable(); // Ej. PG, SF, C
+            $table->text('descripcion')->nullable();
             $table->timestamps();
         });
     }

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Arbitro extends Model
 {
-    //
+protected $fillable = ['nombre', 'experiencia_anios', 'certificacion'];
 }

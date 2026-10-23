@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('uniformes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('equipo_id')->constrained('equipos')->onDelete('cascade');
+            $table->string('tipo'); // Local, Visitante, Alternativo
+            $table->string('color_principal'); 
+            $table->string('color_secundario')->nullable();
             $table->timestamps();
         });
     }

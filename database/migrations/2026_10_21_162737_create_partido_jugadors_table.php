@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partido_jugadors', function (Blueprint $table) {
+        Schema::create('partido_jugadores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('partido_id')->constrained('partidos')->onDelete('cascade');
+            $table->foreignId('jugador_id')->constrained('jugadores')->onDelete('cascade');
             $table->timestamps();
+            
+            // Regla de negocio a nivel base de datos: Un jugador no puede ser convocado 2 veces al mismo partido
+            $table->unique(['partido_id', 'jugador_id']);
         });
     }
 

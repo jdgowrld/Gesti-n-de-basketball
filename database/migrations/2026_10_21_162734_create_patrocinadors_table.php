@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patrocinadors', function (Blueprint $table) {
+        Schema::create('patrocinadores', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('industria')->nullable(); // Ej. Ropa deportiva, Bebidas, Bancos
+            $table->decimal('monto_patrocinio', 10, 2)->default(0); 
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

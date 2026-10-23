@@ -63,11 +63,76 @@
                                 </span>
                             </td>
                             <td>
+                                <!-- Botón Editar -->
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{$partido->id}}">Editar</button>
+                                
+                                <!-- Botón Eliminar -->
                                 <form action="{{ route('partidos.destroy', $partido->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este partido del calendario?')">Borrar</button>
                                 </form>
+
+                                <!-- MODAL DE EDICIÓN DE PARTIDO -->
+                                <x-modal id="editModal{{$partido->id}}" title="Actualizar Partido">
+                                    <form action="{{ route('partidos.update', $partido->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        
+                                        <div class="mb-3">
+                                            <label>Torneo</label>
+                                            <select name="torneo_id" class="form-control" required>
+                                                @foreach($torneos as $torneo)
+                                                    <option value="{{ $torneo->id }}" {{ $partido->torneo_id == $torneo->id ? 'selected' : '' }}>{{ $torneo->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label>Equipo Local</label>
+                                                <select name="equipo_local_id" class="form-control" required>
+                                                    @foreach($equipos as $equipo)
+                                                        <option value="{{ $equipo->id }}" {{ $partido->equipo_local_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label>Equipo Visitante</label>
+                                                <select name="equipo_visitante_id" class="form-control" required>
+                                                    @foreach($equipos as $equipo)
+                                                        <option value="{{ $equipo->id }}" {{ $partido->equipo_visitante_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label>Fecha</label>
+                                                <input type="date" name="fecha" class="form-control" value="{{ $partido->fecha }}" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label>Hora</label>
+                                                <input type="time" name="hora" class="form-control" value="{{ $partido->hora }}" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Estado del Partido</label>
+                                            <select name="estado" class="form-control fw-bold" required>
+                                                <option value="Programado" {{ $partido->estado == 'Programado' ? 'selected' : '' }}>Programado</option>
+                                                <option value="En Juego" {{ $partido->estado == 'En Juego' ? 'selected' : '' }} class="text-warning">En Juego</option>
+                                                <option value="Finalizado" {{ $partido->estado == 'Finalizado' ? 'selected' : '' }} class="text-success">Finalizado</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-warning">Actualizar Estado</button>
+                                        </div>
+                                    </form>
+                                </x-modal>
                             </td>
                         </tr>
                         @endforeach

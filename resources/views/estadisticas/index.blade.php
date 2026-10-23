@@ -74,7 +74,7 @@
     </div>
 
     <!-- MODAL DE CREACIÓN REFACTORIZADO -->
-    <x-modal id="createModal" title="Añadir Estadísticas al Box Score">
+<x-modal id="createModal" title="Añadir Estadísticas al Box Score" size="modal-xl">
         <form action="{{ route('estadisticas.store') }}" method="POST">
             @csrf
             <div class="row">
