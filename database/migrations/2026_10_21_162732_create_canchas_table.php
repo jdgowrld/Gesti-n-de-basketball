@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('canchas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('direccion');
+            $table->integer('capacidad')->nullable();
             $table->timestamps();
         });
     }

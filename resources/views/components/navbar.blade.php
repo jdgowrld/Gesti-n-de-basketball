@@ -18,9 +18,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('partidos.index') }}">Partidos</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('jugadores.index') }}">Jugadores</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="{{ route('estadisticas.index') }}">Estadísticas</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('jugadores.index') }}">Jugadores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('estadisticas.index') }}">Estadísticas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('canchas.index') }}">Canchas</a>
+                </li>
             </ul>
         </div>
     </div>

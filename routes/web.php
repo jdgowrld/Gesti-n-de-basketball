@@ -7,7 +7,7 @@ use App\Http\Controllers\TorneoController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\EstadisticaController;
-
+use App\Http\Controllers\CanchaController;
 
 
 Route::get('/', function () {
@@ -20,3 +20,5 @@ Route::resource('torneos', TorneoController::class);
 Route::resource('partidos', PartidoController::class);
 Route::resource('jugadores', JugadorController::class);
 Route::resource('estadisticas', EstadisticaController::class);
+Route::resource('canchas', CanchaController::class);
+
