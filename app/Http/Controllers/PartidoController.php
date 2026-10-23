@@ -50,7 +50,7 @@ class PartidoController extends Controller
         }
     }
 
-    use App\Models\Posicion;
+   
 
 public function create()
 {

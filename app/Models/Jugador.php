@@ -10,13 +10,7 @@ class Jugador extends Model
     use HasFactory;
 
     protected $table = 'jugadores'; // Forzamos el plural en español
-
-    protected $fillable = [
-        'equipo_id',
-        'nombre',
-        'posicion',
-        'numero'
-    ];
+    protected $fillable = ['nombre', 'numero', 'equipo_id', 'posicion_id'];
 
     public function equipo()
     {
@@ -24,7 +18,8 @@ class Jugador extends Model
     }
     
     public function posicion()
-{
-    return $this->belongsTo(Posicion::class);
-}
+    {
+        // Un Jugador 'pertenece a' una Posición
+        return $this->belongsTo(Posicion::class);
+    }
 }
