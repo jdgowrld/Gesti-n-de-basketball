@@ -52,7 +52,8 @@
                             <td>{{ $jugador->id }}</td>
                             <td class="fw-bold">{{ $jugador->nombre }}</td>
                             <td>{{ $jugador->numero }}</td>
-                            <td>{{ $jugador->posicion }}</td>
+                            <!-- AQUÍ SE IMPRIME LA RELACIÓN CORRECTA -->
+                            <td>{{ $jugador->posicion->nombre ?? 'N/A' }}</td>
                             <td>{{ $jugador->equipo->nombre ?? 'N/A' }}</td>
                             <td>
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{$jugador->id}}">Editar</button>
@@ -63,7 +64,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que quieres dar de baja a este jugador?')">Eliminar</button>
                                 </form>
 
-                                <!-- MODAL DE EDICIÓN REFACTORIZADO -->
+                                <!-- MODAL DE EDICIÓN -->
                                 <x-modal id="editModal{{$jugador->id}}" title="Actualizar Jugador">
                                     <form action="{{ route('jugadores.update', $jugador->id) }}" method="POST">
                                         @csrf
@@ -80,12 +81,13 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label>Posición</label>
-                                                <select name="posicion" class="form-control" required>
-                                                    <option value="Base" {{ $jugador->posicion == 'Base' ? 'selected' : '' }}>Base (1)</option>
-                                                    <option value="Escolta" {{ $jugador->posicion == 'Escolta' ? 'selected' : '' }}>Escolta (2)</option>
-                                                    <option value="Alero" {{ $jugador->posicion == 'Alero' ? 'selected' : '' }}>Alero (3)</option>
-                                                    <option value="Ala-Pívot" {{ $jugador->posicion == 'Ala-Pívot' ? 'selected' : '' }}>Ala-Pívot (4)</option>
-                                                    <option value="Pívot" {{ $jugador->posicion == 'Pívot' ? 'selected' : '' }}>Pívot (5)</option>
+                                                <select name="posicion_id" class="form-control" required>
+                                                    <option value="">Selecciona una posición</option>
+                                                    @foreach($posiciones as $posicion)
+                                                        <option value="{{ $posicion->id }}" {{ $jugador->posicion_id == $posicion->id ? 'selected' : '' }}>
+                                                            {{ $posicion->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -116,7 +118,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN REFACTORIZADO -->
+    <!-- MODAL DE CREACIÓN -->
     <x-modal id="createModal" title="Fichar Jugador">
         <form action="{{ route('jugadores.store') }}" method="POST">
             @csrf
@@ -132,13 +134,11 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label>Posición</label>
-                    <select name="posicion" class="form-control" required>
+                    <select name="posicion_id" class="form-control" required>
                         <option value="">Selecciona...</option>
-                        <option value="Base">Base (1)</option>
-                        <option value="Escolta">Escolta (2)</option>
-                        <option value="Alero">Alero (3)</option>
-                        <option value="Ala-Pívot">Ala-Pívot (4)</option>
-                        <option value="Pívot">Pívot (5)</option>
+                        @foreach($posiciones as $posicion)
+                            <option value="{{ $posicion->id }}">{{ $posicion->nombre }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -157,19 +157,6 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Fichar Jugador</button>
             </div>
-
-            <div class="mb-3">
-    <label class="form-label">Posición</label>
-    <select name="posicion_id" class="form-control" required>
-        <option value="">Selecciona una posición</option>
-        @foreach($posiciones as $posicion)
-            <option value="{{ $posicion->id }}" {{ $jugador->posicion_id == $posicion->id ? 'selected' : '' }}>
-                {{ $posicion->nombre }}
-            </option>
-        @endforeach
-    </select>
-</div>
-
         </form>
     </x-modal>
     

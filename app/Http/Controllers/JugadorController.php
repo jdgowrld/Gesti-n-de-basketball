@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jugador;
 use App\Models\Equipo;
+use App\Models\Posicion; 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreJugadorRequest;
 
@@ -48,7 +49,7 @@ class JugadorController extends Controller
         }
     }
 
-    use App\Models\Posicion;
+    
 
 public function create()
 {

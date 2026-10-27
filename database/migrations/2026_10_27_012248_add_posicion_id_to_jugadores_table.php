@@ -12,7 +12,6 @@ return new class extends Migration
    public function up(): void
 {
     Schema::table('jugadores', function (Blueprint $table) {
-        // Si tenías una columna vieja de texto, bórrala primero:
         
         $table->foreignId('posicion_id')->nullable()->constrained('posicions')->onDelete('set null');
     });

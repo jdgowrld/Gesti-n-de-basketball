@@ -14,7 +14,7 @@ class PartidoJugadorController extends Controller
         $convocatorias = PartidoJugador::with(['partido', 'jugador'])->get();
         $partidos = Partido::all();
         $jugadores = Jugador::with('equipo')->get(); // Traemos el equipo para saber de dónde es el jugador
-        return view('convocatorias.index', compact('convocatorias', 'partidos', 'jugadores'));
+        return view('partido_jugadores.index', compact('convocatorias', 'partidos', 'jugadores'));
     }
 
     public function store(StorePartidoJugadorRequest $request)

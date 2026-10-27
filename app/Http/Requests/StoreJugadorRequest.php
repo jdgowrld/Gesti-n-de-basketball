@@ -11,13 +11,13 @@ class StoreJugadorRequest extends FormRequest
         return true; 
     }
 
-    public function rules(): array
+   public function rules(): array
     {
         return [
-            'equipo_id' => 'required|exists:equipos,id',
             'nombre' => 'required|string|max:255',
-            'posicion' => 'required|string',
-            'numero' => 'required|integer'
+            'numero' => 'required|integer',
+            'posicion_id' => 'required|exists:posicions,id',
+            'equipo_id' => 'required|exists:equipos,id'
         ];
     }
 }
