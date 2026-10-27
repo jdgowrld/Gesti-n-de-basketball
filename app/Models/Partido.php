@@ -33,4 +33,14 @@ class Partido extends Model
     {
         return $this->belongsTo(Equipo::class, 'equipo_visitante_id');
     }
+
+    public function cancha()
+{
+    return $this->belongsTo(Cancha::class);
+}
+
+public function arbitro()
+{
+    return $this->belongsTo(Arbitro::class);
+}
 }

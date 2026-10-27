@@ -9,12 +9,14 @@ use App\Http\Requests\StoreJugadorRequest;
 
 class JugadorController extends Controller
 {
-    public function index()
-    {
-        $jugadores = Jugador::with('equipo')->get();
-        $equipos = Equipo::all();
-        return view('jugadores.index', compact('jugadores', 'equipos'));
-    }
+   public function index()
+{
+    $jugadores = Jugador::with(['equipo', 'posicion'])->get();
+    $equipos = Equipo::all();
+    $posiciones = Posicion::all(); // <-- Agrega esto si también usas posiciones en el modal
+    
+    return view('jugadores.index', compact('jugadores', 'equipos', 'posiciones'));
+}
 
     public function store(StoreJugadorRequest $request)
     {
@@ -45,4 +47,12 @@ class JugadorController extends Controller
             return back()->withErrors(['error' => 'Fallo al eliminar.']);
         }
     }
+
+    use App\Models\Posicion;
+
+public function create()
+{
+    $posiciones = Posicion::all();
+    return view('jugadores.create', compact('posiciones'));
+}
 }

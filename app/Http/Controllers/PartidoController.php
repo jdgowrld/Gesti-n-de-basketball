@@ -49,4 +49,12 @@ class PartidoController extends Controller
             return back()->withErrors(['error' => 'Fallo al eliminar.']);
         }
     }
+
+    use App\Models\Posicion;
+
+public function create()
+{
+    $posiciones = Posicion::all();
+    return view('jugadores.create', compact('posiciones'));
+}
 }

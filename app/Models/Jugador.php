@@ -22,4 +22,9 @@ class Jugador extends Model
     {
         return $this->belongsTo(Equipo::class);
     }
+    
+    public function posicion()
+{
+    return $this->belongsTo(Posicion::class);
+}
 }

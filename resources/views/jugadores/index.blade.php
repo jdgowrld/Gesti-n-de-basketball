@@ -157,6 +157,19 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Fichar Jugador</button>
             </div>
+
+            <div class="mb-3">
+    <label class="form-label">Posición</label>
+    <select name="posicion_id" class="form-control" required>
+        <option value="">Selecciona una posición</option>
+        @foreach($posiciones as $posicion)
+            <option value="{{ $posicion->id }}" {{ $jugador->posicion_id == $posicion->id ? 'selected' : '' }}>
+                {{ $posicion->nombre }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
         </form>
     </x-modal>
     
