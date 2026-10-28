@@ -18,7 +18,18 @@ class StoreEquipoRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'ciudad' => 'required|string|max:255',
+            'correo' => 'required|email|max:255',
             'logo' => 'nullable|string'
         ];
     }
+    
+    public function messages(): array
+{
+    return [
+        'nombre.required' => 'El nombre del equipo es obligatorio.',
+        'ciudad.required' => 'La ciudad es obligatoria.',
+        'correo.required' => 'El correo es obligatorio.',
+        'correo.email' => 'Debes ingresar un formato de correo válido (ej. correo@dominio.com).'
+    ];
+}
 }

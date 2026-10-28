@@ -96,28 +96,53 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN REFACTORIZADO CON EL COMPONENTE -->
-    <x-modal id="createModal" title="Registrar Equipo">
-        <form action="{{ route('equipos.store') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-                <label>Nombre del Equipo</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Ej. Toros de Torreón" required>
-            </div>
-            <div class="mb-3">
-                <label>Ciudad</label>
-                <input type="text" name="ciudad" class="form-control" placeholder="Ej. Torreón" required>
-            </div>
-            <div class="mb-3">
-                <label>Logo (Opcional - URL)</label>
-                <input type="text" name="logo" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Registrar</button>
-            </div>
-        </form>
-    </x-modal>
+   <!-- Modal de Creación de Equipo -->
+<x-modal id="createModal" title="Registrar Nuevo Equipo">
+    <!-- 1. Agregamos novalidate aquí para apagar la alerta nativa del navegador -->
+    <form action="{{ route('equipos.store') }}" method="POST" novalidate>
+        @csrf
+        
+        <div class="mb-3">
+            <label class="form-label">Nombre del Equipo</label>
+            <!-- 2. Clases dinámicas de error y retención de datos con old() -->
+            <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" placeholder="Ej. Toros de Torreón" value="{{ old('nombre') }}" required>
+            
+            <!-- 3. Bloque para imprimir el mensaje rojo de Laravel -->
+            @error('nombre')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ciudad</label>
+            <input type="text" name="ciudad" class="form-control @error('ciudad') is-invalid @enderror" placeholder="Ej. Torreón" value="{{ old('ciudad') }}" required>
+            
+            @error('ciudad')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo de Contacto</label>
+            <input type="email" name="correo" class="form-control @error('correo') is-invalid @enderror" placeholder="ejemplo@correo.com" value="{{ old('correo') }}" required>
+            
+            @error('correo')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Equipo</button>
+        </div>
+    </form>
+</x-modal>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
