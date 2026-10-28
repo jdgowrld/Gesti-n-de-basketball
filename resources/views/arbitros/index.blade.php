@@ -17,13 +17,6 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-            </div>
-        @endif
 
         <div class="row mb-3">
             <div class="col-lg-10 offset-lg-1">
@@ -59,23 +52,16 @@
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Dar de baja a este árbitro?')">Eliminar</button>
                                 </form>
 
-                                <!-- MODAL DE EDICIÓN -->
+                                <!-- MODAL DE EDICIÓN CON COMPONENTES -->
                                 <x-modal id="editModal{{$arbitro->id}}" title="Actualizar Árbitro">
-                                    <form action="{{ route('arbitros.update', $arbitro->id) }}" method="POST">
+                                    <form action="{{ route('arbitros.update', $arbitro->id) }}" method="POST" novalidate>
                                         @csrf
                                         @method('PUT')
-                                        <div class="mb-3">
-                                            <label>Nombre Completo</label>
-                                            <input type="text" name="nombre" class="form-control" value="{{ $arbitro->nombre }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Años de Experiencia</label>
-                                            <input type="number" name="experiencia_anios" class="form-control" value="{{ $arbitro->experiencia_anios }}" min="0" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Certificación (Opcional)</label>
-                                            <input type="text" name="certificacion" class="form-control" value="{{ $arbitro->certificacion }}" placeholder="Ej. FIBA, Nacional...">
-                                        </div>
+                                        
+                                        <x-input-field name="nombre" label="Nombre Completo" :value="$arbitro->nombre" />
+                                        <x-input-field name="experiencia_anios" label="Años de Experiencia" type="number" :value="$arbitro->experiencia_anios" />
+                                        <x-input-field name="certificacion" label="Certificación (Opcional)" placeholder="Ej. FIBA, Nacional..." :value="$arbitro->certificacion" :required="false" />
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                             <button type="submit" class="btn btn-warning">Actualizar</button>
@@ -91,22 +77,15 @@
         </div>
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
+    <!-- MODAL DE CREACIÓN CON COMPONENTES -->
     <x-modal id="createModal" title="Registrar Nuevo Árbitro">
-        <form action="{{ route('arbitros.store') }}" method="POST">
+        <form action="{{ route('arbitros.store') }}" method="POST" novalidate>
             @csrf
-            <div class="mb-3">
-                <label>Nombre Completo</label>
-                <input type="text" name="nombre" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Años de Experiencia</label>
-                <input type="number" name="experiencia_anios" class="form-control" value="0" min="0" required>
-            </div>
-            <div class="mb-3">
-                <label>Certificación (Opcional)</label>
-                <input type="text" name="certificacion" class="form-control" placeholder="Ej. FIBA, Nacional...">
-            </div>
+            
+            <x-input-field name="nombre" label="Nombre Completo" placeholder="Nombre del árbitro" />
+            <x-input-field name="experiencia_anios" label="Años de Experiencia" type="number" value="0" />
+            <x-input-field name="certificacion" label="Certificación (Opcional)" placeholder="Ej. FIBA, Nacional..." />
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Registrar</button>

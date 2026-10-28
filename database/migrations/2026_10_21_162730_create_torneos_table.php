@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             
-            // LA MAGIA DE LA LLAVE FORÁNEA:
-            // constrained() busca automáticamente la tabla 'temporadas' y el campo 'id'.
-            // cascadeOnDelete() asegura que si borras una temporada, se borren sus torneos para no dejar datos basura (huérfanos).
+           
             $table->foreignId('temporada_id')->constrained()->cascadeOnDelete();
             
             $table->timestamps();

@@ -18,7 +18,6 @@ class StoreEquipoRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'ciudad' => 'required|string|max:255',
-            'correo' => 'required|email|max:255',
             'logo' => 'nullable|string'
         ];
     }
